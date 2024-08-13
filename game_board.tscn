@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b0rv5r2qda7ih"]
+
+[node name="Board" type="Node2D"]
+
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
