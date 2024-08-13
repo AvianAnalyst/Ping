@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dey67156ghuy2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8r6yg"]
+size = Vector2(30, 155)
+
+[node name="Paddle" type="CharacterBody2D"]
+position = Vector2(567, 340)
+collision_layer = 4
+collision_mask = 3
+metadata/_edit_group_ = true
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(0.517239, 0)
+scale = Vector2(1.03448, 1)
+color = Color(0, 0.4, 0, 1)
+polygon = PackedVector2Array(-15, -76, 14, -76, 14, 79, -15, 79)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_8r6yg")

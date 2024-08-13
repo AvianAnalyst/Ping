@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://cloanicdu5413"]
+
+[ext_resource type="LabelSettings" uid="uid://cqkcrtgaxdu1e" path="res://new_label_settings.tres" id="1_ghrop"]
+
+[node name="Scoreboard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerScore" type="Label" parent="."]
+layout_mode = 0
+offset_left = 240.0
+offset_top = 73.0
+offset_right = 461.0
+offset_bottom = 147.0
+text = "0"
+label_settings = ExtResource("1_ghrop")
+
+[node name="PlayerScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 127.0
+offset_top = 5.0
+offset_right = 348.0
+offset_bottom = 79.0
+text = "Player Score"
+label_settings = ExtResource("1_ghrop")
+
+[node name="OpponentScoreLable" type="Label" parent="."]
+layout_mode = 0
+offset_left = 617.0
+offset_top = -1.0
+offset_right = 1009.0
+offset_bottom = 73.0
+text = "Opponent Score"
+label_settings = ExtResource("1_ghrop")
+
+[node name="OpponentScore" type="Label" parent="."]
+layout_mode = 0
+offset_left = 801.0
+offset_top = 70.0
+offset_right = 977.0
+offset_bottom = 142.0
+text = "0"
+label_settings = ExtResource("1_ghrop")

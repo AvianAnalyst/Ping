@@ -1,7 +1,87 @@
-[gd_scene format=3 uid="uid://b0rv5r2qda7ih"]
+[gd_scene load_steps=11 format=3 uid="uid://b0rv5r2qda7ih"]
+
+[ext_resource type="PackedScene" uid="uid://b7wyfiauiicby" path="res://ball.tscn" id="1_c4fml"]
+[ext_resource type="Script" path="res://game_board.gd" id="1_gn71l"]
+[ext_resource type="PackedScene" uid="uid://dey67156ghuy2" path="res://paddle.tscn" id="2_veiw4"]
+[ext_resource type="PackedScene" uid="uid://cloanicdu5413" path="res://scoreboard.tscn" id="3_dttq7"]
+[ext_resource type="Script" path="res://player.gd" id="3_l0vya"]
+[ext_resource type="Script" path="res://enemy.gd" id="3_nwwvh"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3otnr"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uiha1"]
+distance = -650.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_tvwgd"]
+normal = Vector2(1, 0)
+distance = 1.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_0ofs3"]
+normal = Vector2(-1, 0)
 
 [node name="Board" type="Node2D"]
+script = ExtResource("1_gn71l")
 
 [node name="Background" type="Polygon2D" parent="."]
+scale = Vector2(1, 1.00463)
 color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 648, 0, 648)
+polygon = PackedVector2Array(0, 0, 1152, 0, 1152, 108.759, 1152, 648, 0, 648)
+
+[node name="Scoreboard" parent="." instance=ExtResource("3_dttq7")]
+
+[node name="Player" parent="." instance=ExtResource("2_veiw4")]
+position = Vector2(15, 300)
+script = ExtResource("3_l0vya")
+
+[node name="Opponent" parent="." instance=ExtResource("2_veiw4")]
+position = Vector2(1137, 300)
+script = ExtResource("3_nwwvh")
+
+[node name="Ball" parent="." groups=["balls"] instance=ExtResource("1_c4fml")]
+position = Vector2(600, 300)
+
+[node name="Roof" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Roof"]
+position = Vector2(0, -2)
+shape = SubResource("WorldBoundaryShape2D_3otnr")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("WorldBoundaryShape2D_uiha1")
+
+[node name="LeftWall" type="Area2D" parent="."]
+position = Vector2(-1, 114)
+collision_layer = 8
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+shape = SubResource("WorldBoundaryShape2D_tvwgd")
+
+[node name="RightWall" type="Area2D" parent="."]
+position = Vector2(1154, 108)
+collision_layer = 8
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+shape = SubResource("WorldBoundaryShape2D_0ofs3")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="child_entered_tree" from="." to="Opponent" method="_on_board_child_entered_tree"]
+[connection signal="child_exiting_tree" from="." to="Opponent" method="_on_board_child_exiting_tree"]
+[connection signal="child_exiting_tree" from="Ball" to="Opponent" method="_on_ball_child_exiting_tree"]
+[connection signal="tree_entered" from="Ball" to="Opponent" method="_on_ball_tree_entered"]
+[connection signal="body_entered" from="LeftWall" to="." method="_on_left_wall_body_entered"]
+[connection signal="body_entered" from="LeftWall" to="Ball" method="_on_left_wall_body_entered"]
+[connection signal="body_entered" from="RightWall" to="." method="_on_right_wall_body_entered"]
+[connection signal="body_entered" from="RightWall" to="Ball" method="_on_right_wall_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer" to="Opponent" method="_on_timer_timeout"]
